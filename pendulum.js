@@ -5,6 +5,9 @@ class Pendulum {
         this.y = y;
         this.color = c; 
 
+        this.being_dragged = false; 
+        this.held_offset = null;
+
         this.l = l; 
         this.tip_l = tip_l; 
         this.lambda = lambda; // Friction
@@ -12,10 +15,10 @@ class Pendulum {
 
         // Angle when observed from the side wrt x
         this.theta = Math.random()*0.1 -0.05;
-        this.theta_v = Math.random()/25 - 0.05; 
+        this.theta_v = Math.random()/100 - 0.005; 
 
         // Angle off of x when obseved from above
-        this.phi = Math.tanh(y/x); 
+        this.phi = Math.random() * 2; 
         this.phi_v = Math.random() * 10 - 5; 
 
         this.last_x = NaN; 
@@ -36,7 +39,20 @@ class Pendulum {
         return [this.x+dx, this.y+dy];
     }
 
-    update() {
+    update(mx,my) {
+        if (this.being_dragged) {
+            let [off_x,off_y] = this.held_offset; 
+            let x = mx-off_x-this.x; let y = my-off_y-this.y; 
+
+            this.theta_v = 0; 
+            this.phi = Math.tanh(y/x); 
+            this.theta = Math.sinh(x / (this.l * Math.cos(this.phi)));
+
+            this.last_x = mx-off_x; 
+            this.last_y = my-off_y;
+            return; 
+        }
+
         let [x,y] = this.coords();
         this.last_x = x; 
         this.last_y = y; 
@@ -51,15 +67,28 @@ class Pendulum {
         this.phi += this.phi_v*this.dt;
     }
 
-    draw(ctx) {
+    draw(ctx, x=null,y=null) {
+        if (!this.being_dragged) {
+            // Otherwise, mouse coords will be used 
+            [x,y] = this.coords(); 
+        }
+        else {
+            let [off_x,off_y] = this.held_offset; 
+            x -= off_x; y -= off_y; 
+        }
+        
+        // Draw ball
         ctx.beginPath();
         ctx.fillStyle = this.color; 
-
-        let size = 1;
-        
-        let [x,y] = this.coords(); 
-        ctx.arc(x, y, 10, size, 2 * Math.PI, false);
+        ctx.arc(x, y, 25, 1, 2 * Math.PI, false);
         ctx.fill();
+
+        // Draw line
+        ctx.beginPath(); 
+        ctx.fillStyle = "#696969"; // hehe
+        ctx.moveTo(this.x, this.y); 
+        ctx.lineTo(x,y); 
+        ctx.stroke();
     }
 
     trace(ctx) {
