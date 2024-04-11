@@ -2,18 +2,26 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
+        <script src="pendulum.js"></script>
+        <script src="harmonograph.js"></script> 
     </head>
     <body>
         <div id="everything">
+            <div id="toolbar">
+                <input type="color" name="pen" id="pen" value="#b4cbd9"/>
+                <label for="pen">Pen color</label>
+                <input type="checkbox" name="pviz" onclick="pen_viz = !pen_viz;" checked>
+                <label for ="pviz">Pendula visible</label>
+                <br>
+                <input type="button" value="Reset" onclick="reset()"/>
+            </div>
             <div id="canvas-container">
                 <canvas id="canvas">
                     Your browser does not support the HTML canvas tag.
                 </canvas>
+                <canvas id="trace"></canvas>
             </div>
         </div>
-        <a id="link"></a>
     </body>
-    <script src="pendulum.js"></script>
-    <script src="harmonograph.js"></script>
 </html>
 

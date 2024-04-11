@@ -19,5 +19,16 @@ canvas {
     left: 0;
     top: 0; 
     border: 1px solid #373737;
-    display: block;  /* <---- As simple as that */
+    display: block; 
+    position: absolute;
+}
+
+#toolbar {
+    border-color: aliceblue;
+    border-style: dotted;
+    float: left;
+    position: absolute;
+    margin: 5px; 
+    padding: 5px;
+    z-index: 100;
 }
