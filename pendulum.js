@@ -1,5 +1,5 @@
 class Pendulum {
-    constructor(x,y,c, l=5000,tip_l=1, lambda=0.9999) {
+    constructor(x,y,c, l=5000,tip_l=1, lambda=0.9999, theta_0=null, phi_0=null) {
         // X,y are coords when pendulum viewed from above 
         this.x = x; 
         this.y = y;
@@ -14,11 +14,20 @@ class Pendulum {
         this.dt = 0.01;
 
         // Angle when observed from the side wrt x
-        this.theta = Math.random()*0.1 -0.05;
+        if (theta_0 == null) {
+            this.theta = Math.random()*0.1 -0.05;
+        } else {
+            this.theta = theta_0; 
+        }
         this.theta_v = Math.random()/100 - 0.005; 
 
         // Angle off of x when obseved from above
-        this.phi = Math.random() * 2; 
+        if (phi_0 == null) {
+            this.phi = Math.random() * 2; 
+        }
+        else {
+            this.phi = phi_0;
+        }
         this.phi_v = Math.random() * 10 - 5; 
 
         this.last_x = NaN; 
@@ -85,7 +94,7 @@ class Pendulum {
 
         // Draw line
         ctx.beginPath(); 
-        ctx.fillStyle = "#696969"; // hehe
+        ctx.strokeStyle = "#696969"; // hehe
         ctx.moveTo(this.x, this.y); 
         ctx.lineTo(x,y); 
         ctx.stroke();
