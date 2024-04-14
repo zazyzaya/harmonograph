@@ -32,3 +32,30 @@ canvas {
     padding: 5px;
     z-index: 100;
 }
+
+#params {
+    width: 100%; 
+    margin-left: 20px; 
+    margin-top: 10px; 
+    margin-bottom: 0px; 
+}
+
+.supsub {
+    display: inline-block;
+}
+
+.supsub sup,
+.supsub sub {
+    position: relative;
+    display: block;
+    font-size: .5em;
+    line-height: 1.2;
+}
+
+.supsub sub {
+    top: .3em;
+}
+
+.paramtext {
+    width: 4em;
+}

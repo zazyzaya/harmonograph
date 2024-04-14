@@ -10,12 +10,46 @@
             <div id="toolbar">
                 <input type="color" name="pen" id="pen" value="#b4cbd9"/>
                 <label for="pen">Pen color</label>
-                <input type="checkbox" name="pviz" onclick="pen_viz = !pen_viz;" checked>
-                <label for ="pviz">Pendula visible</label>
+                <input type="color" name="bgcolor" id="bgcolor" value="#282828" onchange="change_bg_color()"/>
+                <label for="bgcolor">Paper color</label>
                 <br>
+                <label for="l">Length</label>
+                <input type="text" name="l" id="l" class="paramtext">
+                <label for="zoom">Zoom</label>
+                <input type="text" name="zoom" id="zoom" class="paramtext">
+                <label for="dt">&part;t</label>
+                <input type="text" name="dt" id="dt" class="paramtext">
+                <br>
+                <div id="params">
+                    <label for="theta1">&theta;<span class="supsub"><sup>1</sup><sub>0</sub></span></label>
+                    <input type="text" name="theta1" id="theta1" class="paramtext">
+                    <label for="phi1">&phi;<span class="supsub"><sup>1</sup><sub>0</sub></span></label>
+                    <input type="text" name="phi1" id="phi1" class="paramtext">
+                    <label for="phidot1">&phi;'<span class="supsub"><sup>1</sup><sub>0</sub></span></label>
+                    <input type="text" name="phidot1" id="phidot1" class="paramtext">
+                    <br>
+                    <label for="theta2">&theta;<span class="supsub"><sup>2</sup><sub>0</sub></span></label>
+                    <input type="text" name="theta2" id="theta2" class="paramtext">
+                    <label for="phi2">&phi;<span class="supsub"><sup>2</sup><sub>0</sub></span></label>
+                    <input type="text" name="phi2" id="phi2" class="paramtext">
+                    <label for="phidot2">&phi;'<span class="supsub"><sup>2</sup><sub>0</sub></span></label>
+                    <input type="text" name="phidot2" id="phidot2" class="paramtext">
+                    <br>
+                    <label for="theta3">&theta;<span class="supsub"><sup>3</sup><sub>0</sub></span></label>
+                    <input type="text" name="theta3" id="theta3" class="paramtext">
+                    <label for="phi3">&phi;<span class="supsub"><sup>3</sup><sub>0</sub></span></label>
+                    <input type="text" name="phi3" id="phi3" class="paramtext">
+                    <label for="phidot3">&phi;'<span class="supsub"><sup>3</sup><sub>0</sub></span></label>
+                    <input type="text" name="phidot3" id="phidot3" class="paramtext">
+                </div>
+                <br>
+                <input type="button" value="Submit" onclick="submit()"/>
                 <input type="button" value="Pause" onclick="pause_fn()"/>
                 <input type="button" value="Clear" onclick="clear_fn()"/>
                 <input type="button" value="Reset" onclick="reset()"/>
+                <br>
+                <input type="checkbox" name="pviz" onclick="pen_viz = !pen_viz;">
+                <label for ="pviz">Pendula visible</label>
             </div>
             <div id="canvas-container">
                 <canvas id="canvas">

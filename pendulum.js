@@ -1,5 +1,10 @@
+const DEFAULT_L = 10; 
+const DEFAULT_TIP = 50; 
+const DEFAULT_FRIC = 0.9999;
+const DEFAULT_DT = 0.005;
+
 class Pendulum {
-    constructor(x,y,c, l=5000,tip_l=1, lambda=0.9999, theta_0=null, phi_0=null) {
+    constructor(x,y,c, l=1,tip_l=1, theta_0=NaN, phi_0=NaN, phi_v0=NaN, dt=DEFAULT_DT, lambda=DEFAULT_FRIC) {
         // X,y are coords when pendulum viewed from above 
         this.x = x; 
         this.y = y;
@@ -8,27 +13,35 @@ class Pendulum {
         this.being_dragged = false; 
         this.held_offset = null;
 
-        this.l = l; 
-        this.tip_l = tip_l; 
+        this.l = l*DEFAULT_L; 
+        this.tip_l = tip_l*DEFAULT_TIP; 
         this.lambda = lambda; // Friction
-        this.dt = 0.01;
+        this.dt = dt;
 
         // Angle when observed from the side wrt x
-        if (theta_0 == null) {
-            this.theta = Math.random()*0.1 -0.05;
+        if (isNaN(theta_0)) {
+            let neg = (Math.random() > 0.5) ? 1:-1; 
+            this.theta = neg* (Math.random()*0.12 + 0.25);
         } else {
             this.theta = theta_0; 
         }
         this.theta_v = Math.random()/100 - 0.005; 
 
         // Angle off of x when obseved from above
-        if (phi_0 == null) {
+        if (isNaN(phi_0)) {
             this.phi = Math.random() * 2; 
         }
         else {
             this.phi = phi_0;
         }
-        this.phi_v = Math.random() * 10 - 5; 
+
+        // Speed of rotation 
+        if (isNaN(phi_v0)) {
+            this.phi_v = Math.random() * 2 - 1; 
+        } 
+        else {
+            this.phi_v = phi_v0;
+        }
 
         this.last_x = NaN; 
         this.last_y = NaN; 
@@ -67,12 +80,14 @@ class Pendulum {
         this.last_y = y; 
 
         // Assume g/l = 1 
-        let a_theta = -Math.sin(this.theta); 
+        let a_theta = 
+            (Math.sin(this.theta)*Math.cos(this.theta)*Math.pow(this.phi_v/2, 2)) - 
+            ((100/this.l) * Math.sin(this.theta)); 
         this.theta_v += a_theta; 
         this.theta_v *= this.lambda;
         this.theta += this.theta_v*this.dt; 
 
-        //this.phi_v *= this.lambda; 
+        this.phi_v *= this.lambda; 
         this.phi += this.phi_v*this.dt;
     }
 
@@ -89,7 +104,7 @@ class Pendulum {
         // Draw ball
         ctx.beginPath();
         ctx.fillStyle = this.color; 
-        ctx.arc(x, y, 25, 1, 2 * Math.PI, false);
+        ctx.arc(x, y, 25, 2 * Math.PI, false);
         ctx.fill();
 
         // Draw line
