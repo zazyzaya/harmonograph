@@ -45,11 +45,15 @@
                 <br>
                 <input type="button" value="Submit" onclick="submit()"/>
                 <input type="button" value="Pause" onclick="pause_fn()"/>
+                <input type="button" value="Save img" onclick="save_img()"/>
                 <input type="button" value="Clear" onclick="clear_fn()"/>
                 <input type="button" value="Reset" onclick="reset()"/>
                 <br>
                 <input type="checkbox" name="pviz" onclick="pen_viz = !pen_viz;">
                 <label for ="pviz">Pendula visible</label>
+            </div>
+            <div id="about">
+                
             </div>
             <div id="canvas-container">
                 <canvas id="canvas">
@@ -58,6 +62,8 @@
                 <canvas id="trace"></canvas>
             </div>
         </div>
+        <a id="link"></a>
+        <script src="sliders.js"></script>
     </body>
 </html>
 

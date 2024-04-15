@@ -117,9 +117,9 @@ function reset() {
   [last_pen_x,last_pen_y] = combine_pendula();
   pause = false; 
 
-  document.getElementById("pen").value = DEFAULT_PEN; 
-  document.getElementById("bgcolor").value = DEFAULT_PAPER; 
-  change_bg_color();
+  //document.getElementById("pen").value = DEFAULT_PEN; 
+  //document.getElementById("bgcolor").value = DEFAULT_PAPER; 
+  //change_bg_color();
 }
 
 function clear_fn() {
@@ -140,6 +140,15 @@ function pause_fn() {
   pause = false;
   [last_pen_x,last_pen_y] = combine_pendula();
   t_frame = window.requestAnimationFrame(animate);
+}
+
+
+function save_img() {
+  const pcanvas = document.getElementById("trace");
+  var link = document.getElementById('link');
+  link.setAttribute('download', 'harmonograph.png');
+  link.setAttribute('href', pcanvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+  link.click();
 }
 
 function combine_pendula() {
